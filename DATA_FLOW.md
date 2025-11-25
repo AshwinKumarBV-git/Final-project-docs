@@ -34,9 +34,20 @@ This flow represents the core value proposition of the application.
     *   Data is validated by `journal.py` or `wellness.py`.
     *   (Optional) AI analysis of the note to infer implicit emotion.
 3.  **Storage**: Record inserted into `mood_logs` table.
-4.  **Aggregation (Symphony)**:
-    *   `symphony.py` queries `mood_logs` or `global_moods`.
-    *   Data is aggregated by region or time to visualize global mental health trends without exposing individual user data.
+4.  **Real-time Connection (Symphony)**:
+    *   **Input**: User joins "The Lighthouse" (Symphony page).
+    *   **Process**:
+        *   Frontend establishes WebSocket connection to `/symphony/ws`.
+        *   Backend (`symphony.py`) assigns anonymous ID and broadcasts user's position/mood-color to all connected clients.
+    *   **Interaction**: User clicks a star to send a "Pulse". Backend relays message to target client via WebSocket.
+
+### 2.4 Mind Garden (Gamification)
+1.  **Trigger**: User completes an activity (Meditation, Focus Session, Journal Entry).
+2.  **Process**:
+    *   Frontend sends completion data to respective endpoint (e.g., `/focus/session`).
+    *   Backend calculates XP reward (e.g., +1 XP/min for Focus).
+    *   `garden_service.py` updates `mind_garden` table for the specific plant type (Oak, Lotus, etc.).
+3.  **Output**: Updated XP and Plant Level returned to frontend; Plant SVG grows visually.
 
 ### 2.4 Therapist-Client Data Sync
 1.  **Access**: Therapist logs into `TherapistDashboard`.
@@ -69,4 +80,6 @@ This flow represents the core value proposition of the application.
 | `GET` | `/journal/entries` | Retrieve user's past journal entries |
 | `POST` | `/journal/create` | Create a new journal entry with mood tag |
 | `GET` | `/therapist/clients` | List all clients for a logged-in therapist |
-| `GET` | `/symphony/global` | Get aggregated global mood data |
+| `WS` | `/symphony/ws` | Real-time WebSocket connection for Symphony |
+| `POST` | `/focus/session` | Log focus session and award XP |
+| `GET` | `/garden/{id}` | Fetch user's Mind Garden state |
