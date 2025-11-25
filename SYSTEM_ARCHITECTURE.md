@@ -29,6 +29,8 @@ The frontend is designed for responsiveness and interactivity, utilizing a compo
     *   **Chat Interface**: Real-time communication with the AI therapist.
     *   **Therapy & Meditation**: Guided sessions and audio-visual tools.
     *   **Games**: Interactive cognitive exercises (e.g., Breathing Game).
+    *   **Mind Garden**: Gamified wellness tracker with visual plant growth.
+    *   **Symphony**: Real-time anonymous social connection space.
     *   **Therapist Dashboard**: specialized view for clinicians to monitor client progress.
 
 ### 3.2 Backend (API Layer)
@@ -43,6 +45,8 @@ The backend is a high-performance asynchronous web server.
     *   `therapist.py`: Provides endpoints for clinician access to client data.
     *   `ai_service.py`: Interface for Google Gemini API interactions.
     *   `wellness.py`: Manages wellness plans and progress tracking.
+    *   `garden.py`: Manages XP logic and plant state.
+    *   `symphony.py`: Handles WebSocket connections for real-time features.
 
 ### 3.3 Data Layer (Database)
 The system leverages a relational database with strict security policies.
@@ -54,6 +58,8 @@ The system leverages a relational database with strict security policies.
     *   `journal_entries`: User-generated content with mood tags.
     *   `mood_logs`: Quantitative mood scores for tracking.
     *   `wellness_plans`: JSON-based structured plans for users.
+    *   `mind_garden`: Stores plant types, growth stages, and XP.
+    *   `focus_sessions`: Logs of completed focus intervals.
 *   **Security**: Row Level Security (RLS) policies ensure users can only access their own data, while therapists have scoped access to assigned clients.
 
 ### 3.4 External Services
